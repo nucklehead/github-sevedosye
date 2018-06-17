@@ -16,9 +16,9 @@ jobs:
     - stage: build
       script: docker-compose build
     - stage: pull
-    - script: docker-compose pull
+      script: docker-compose pull
     - stage: heroku-docker-login
-    - script: docker login -u _ --password $HEROKU_TOKEN registry.heroku.com
+      script: docker login -u _ --password $HEROKU_TOKEN registry.heroku.com
 
     - stage: tag
       script: docker tag web registry.heroku.com/patecho-ci/web
