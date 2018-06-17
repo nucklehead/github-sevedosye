@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en-us" ng-app="builds-app">
+<head>
+    <meta charset="UTF-8">
+    <title>Play-java-mongodb-docker-testng-allure-ci by nucklehead</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="js/controller.js"></script>
+</head>
+<body>
+    <section class="page-header">
+        <h1 class="project-name">patecho-seve</h1>
+
+        <h2 class="project-tagline">Sa se you anvironman CI/CD ke nou etabli avek maven, junit, allure, sonarqube, travisci ak heroku</h2>
+        <a href="index.html" class="btn">Akey</a>
+        <a href="https://github.com/nucklehead/patecho-seve"
+           class="btn">Gade sou github</a>
+        <a href="https://github.com/nucklehead/patecho-seve/wiki"
+           class="btn">Dev Wiki</a>
+        <a href="/" class="btn">Builds</a>
+    </section>
+
+    <!--<section class="main-content">-->
+    <!--<nav class="navbar navbar-default navbar-fixed-top">-->
+    <!--<h1>Builds</h1>-->
+    <!--</nav>-->
+    <div class="row" ng-controller="buildsCtrl">
+        <div class="col-xs-2 col-md-2">
+            <ul class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical" style="padding: 10px">
+                <li ng-repeat="build in builds" ng-class="{active: $index===selectedIndex}" class="nav-item">
+                    <a class="nav-link active" ng-click="showResults(build, $index)">
+                        <div class="text-center" ng-class="{' text-success': build.status === 'success', ' text-danger': build.status != 'success'}">
+                          <div>Build: {{build.number}}</div>
+                        </div>
+                    </a>
+                    <div class="container-fluid">
+                        <a class="col-xs-6 col-md-6" href="{{getCommitURL(build)}}">Commit: {{build.commit_id.substring(build.commit_id.length - 4, build.commit_id.length)}}</a>
+                        <div class="col-xs-6 col-md-6"> Blame: {{build.github_username}}</div>
+                    </div>
+                    <div class="container">
+                        <a href="{{getBuildURL(build)}}"><img src="https://cdn.freebiesupply.com/logos/large/2x/travis-ci-icon-logo-png-transparent.png"  height="20" width="20"> Codeship</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-10 col-md-10" style="padding: 0">
+            <div class="embed-responsive embed-responsive-4by3">
+                <iframe ng-src="{{buildUrl}}" id="resultsView" class="embed-responsive-item"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!--</section>-->
+
+
+</body>
+</html>
