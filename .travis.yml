@@ -19,26 +19,24 @@ before_install:
   - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
 
 stages:
-  - build
-  - pull
-  - heroku-docker-login
-  - tag
+  - build and pull
   - name: deploy
     if: branch = master
 
 jobs:
   include:
-    - stage: build
-      script: docker-compose build
-    - stage: pull
-      script: docker-compose pull
-    - stage: heroku-docker-login
-      script: docker login -u _ --password $HEROKU_TOKEN registry.heroku.com
-
-    - stage: tag
-      script: docker tag githubsevedosye_web registry.heroku.com/patecho-ci/web
-    - script: docker tag sonarqube registry.heroku.com/patecho-ci/sonarqube
+    - stage: build and pull
+      script: docker-compose build && docker-compose pull
 
     - stage: deploy
-      script: docker push registry.heroku.com/patecho-ci/web
-    - script: docker push registry.heroku.com/patecho-ci/sonarqube
+      script:
+        - >
+          docker login -u _ --password $HEROKU_TOKEN registry.heroku.com &&
+          docker tag githubsevedosye_web registry.heroku.com/patecho-ci/web
+          docker push registry.heroku.com/patecho-ci/web
+
+    - script:
+        - >
+          docker login -u _ --password $HEROKU_TOKEN registry.heroku.com &&
+          docker tag sonarqube registry.heroku.com/patecho-ci/sonarqube &&
+          docker push registry.heroku.com/patecho-ci/sonarqube
