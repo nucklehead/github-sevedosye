@@ -3,20 +3,27 @@ sudo: required
 services:
   - docker
 
-before_install:
-  - docker-compose build
-  - docker-compose pull
-  - docker login -u _ --password $HEROKU_TOKEN registry.heroku.com
+stages:
+  - build
+  - pull
+  - heroku-docker-login
+  - tag
+  - name: deploy
+    if: branch = master
 
-script:
-  - exit 0
+jobs:
+  include:
+    - stage: build
+      script: docker-compose build
+    - stage: pull
+    - script: docker-compose pull
+    - stage: heroku-docker-login
+    - script: docker login -u _ --password $HEROKU_TOKEN registry.heroku.com
 
-deploy:
-  provider: script
-  script: docker tag web registry.heroku.com/patecho-ci/web && docker push registry.heroku.com/patecho-ci/web
-  # on:
-    # branch: master
-  # provider: script
-  # script: docker tag sonarqube registry.heroku.com/patecho-ci/sonarqube && docker push registry.heroku.com/patecho-ci/sonarqube
-  # on:
-    # branch: master
+    - stage: tag
+      script: docker tag web registry.heroku.com/patecho-ci/web
+    - script: docker tag sonarqube registry.heroku.com/patecho-ci/sonarqube
+
+    - stage: deploy
+      script: docker push registry.heroku.com/patecho-ci/web
+    - script: docker push registry.heroku.com/patecho-ci/sonarqube
