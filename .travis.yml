@@ -16,9 +16,9 @@ script:
 deploy:
   provider: script
   script: docker tag web registry.heroku.com/patecho-ci/web && docker push registry.heroku.com/patecho-ci/web
-  on:
-    branch: master
+  # on:
+    # branch: master
   provider: script
   script: docker tag sonarqube registry.heroku.com/patecho-ci/sonarqube && docker push registry.heroku.com/patecho-ci/sonarqube
-  on:
-    branch: master
+  # on:
+    # branch: master
