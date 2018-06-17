@@ -1,2 +1,2 @@
 FROM sonarqube:latest
-CMD [""]
+CMD ["-Dsonar.log.console=true"]

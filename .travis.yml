@@ -33,10 +33,12 @@ jobs:
         - >
           docker login -u _ --password $HEROKU_TOKEN registry.heroku.com &&
           docker tag githubsevedosye_web registry.heroku.com/patecho-ci/web &&
-          docker push registry.heroku.com/patecho-ci/web
+          docker push registry.heroku.com/patecho-ci/web &&
+          heroku container:release --app patecho-ci web
 
     - script:
         - >
           docker login -u _ --password $HEROKU_TOKEN registry.heroku.com &&
           docker tag githubsevedosye_sonarqube registry.heroku.com/patecho-ci/sonarqube &&
-          docker push registry.heroku.com/patecho-ci/sonarqube
+          docker push registry.heroku.com/patecho-ci/sonarqube &&
+          heroku container:release --app patecho-ci sonarqube

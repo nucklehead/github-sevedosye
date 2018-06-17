@@ -52,6 +52,8 @@ func main() {
 }
 
 func kloneRepo(directory string, repo string, token string){
+	log.Printf("The full repo url is: %s\n", fmt.Sprintf("https://%s@%s", token,repo))
+
 	var err error
 	repoKlone, err = git.PlainClone(directory, false, &git.CloneOptions{
 		URL:               fmt.Sprintf("https://%s@%s", token,repo),
