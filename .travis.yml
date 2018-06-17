@@ -26,7 +26,7 @@ stages:
 jobs:
   include:
     - stage: build and pull
-      script: docker-compose build && docker-compose pull
+      script: docker-compose build
 
     - stage: deploy
       script:
@@ -38,5 +38,5 @@ jobs:
     - script:
         - >
           docker login -u _ --password $HEROKU_TOKEN registry.heroku.com &&
-          docker tag sonarqube registry.heroku.com/patecho-ci/sonarqube &&
+          docker tag githubsevedosye_sonarqube registry.heroku.com/patecho-ci/sonarqube &&
           docker push registry.heroku.com/patecho-ci/sonarqube

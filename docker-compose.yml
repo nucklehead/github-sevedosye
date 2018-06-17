@@ -3,6 +3,10 @@ services:
   web:
     build:
       context: ./
+      dockerfile: Dockerfile
 
   sonarqube:
-    image: sonarqube
+    build:
+      context: ./
+      dockerfile: Dockerfile-sonarqube
+    command: ""
