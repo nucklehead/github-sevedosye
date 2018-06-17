@@ -32,7 +32,7 @@ jobs:
       script:
         - >
           docker login -u _ --password $HEROKU_TOKEN registry.heroku.com &&
-          docker tag githubsevedosye_web registry.heroku.com/patecho-ci/web
+          docker tag githubsevedosye_web registry.heroku.com/patecho-ci/web &&
           docker push registry.heroku.com/patecho-ci/web
 
     - script:
